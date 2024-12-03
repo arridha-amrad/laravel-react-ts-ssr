@@ -10,6 +10,7 @@ export default function Authenticated({
   children,
 }: PropsWithChildren<{ header?: ReactNode }>) {
   const user = usePage().props.auth.user;
+  const success = usePage().props.success;
   console.log(user);
 
   const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -33,6 +34,12 @@ export default function Authenticated({
                   active={route().current("dashboard")}
                 >
                   Dashboard
+                </NavLink>
+                <NavLink
+                  href={route("feature.index")}
+                  active={route().current("feature.index")}
+                >
+                  Features
                 </NavLink>
               </div>
             </div>
@@ -167,7 +174,17 @@ export default function Authenticated({
         </header>
       )}
 
-      <main>{children}</main>
+      <div className="py-12">
+        <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+          {success && (
+            <div className="bg-emerald-500 py-4 px-6 rounded mb-8">
+              {success}
+            </div>
+          )}
+
+          <main>{children}</main>
+        </div>
+      </div>
     </div>
   );
 }
