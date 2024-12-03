@@ -2,9 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Enum\PermissionsEnum;
+use App\Enum\RolesEnum;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +17,55 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $adminRole = Role::create(['name' => RolesEnum::Admin->value]);
+
+        $commenterRole = Role::create(['name' => RolesEnum::Commenter->value]);
+
+        $userRole = Role::create(['name' => RolesEnum::User->value]);
+
+        $manageFeaturesPermissions = Permission::create([
+            'name' => PermissionsEnum::ManageFeatures->value
+        ]);
+
+        $manageUsersPermissions = Permission::create([
+            'name' => PermissionsEnum::ManageUsers->value
+        ]);
+
+        $manageCommentPermissions = Permission::create([
+            'name' => PermissionsEnum::ManageComments->value
+        ]);
+
+        $votePermissions = Permission::create([
+            'name' => PermissionsEnum::UpvoteDownvote->value
+        ]);
+
+        $userRole->syncPermissions([$votePermissions]);
+
+        $commenterRole->syncPermissions([
+            $votePermissions,
+            $manageCommentPermissions
+        ]);
+
+        $adminRole->syncPermissions([
+            $votePermissions,
+            $manageCommentPermissions,
+            $manageFeaturesPermissions,
+            $manageUsersPermissions
+        ]);
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+            'name' => 'User User',
+            'email' => 'user@example.com',
+        ])->assignRole(RolesEnum::User);
+
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+        ])->assignRole(RolesEnum::Admin);
+
+        User::factory()->create([
+            'name' => 'Commenter User',
+            'email' => 'commenter@example.com',
+        ])->assignRole(RolesEnum::Commenter);
     }
 }
