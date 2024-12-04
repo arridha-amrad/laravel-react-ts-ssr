@@ -17,9 +17,7 @@ export default function FeatureItem({ feature }: { feature: TFeature }) {
         <FeatureUpvoteDownvote feature={feature} />
         <div className="flex-1">
           <h2 className="text-2xl mb-2">
-            <Link prefetch href={route("feature.index")}>
-              {feature.name}
-            </Link>
+            <Link href={route("feature.show", feature)}>{feature.name}</Link>
           </h2>
           {(feature.description || "").length > 200 && (
             <>

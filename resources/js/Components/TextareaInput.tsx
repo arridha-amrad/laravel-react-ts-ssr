@@ -6,16 +6,15 @@ import {
   useRef,
 } from "react";
 
-export default forwardRef(function TextInput(
+export default forwardRef(function TextareaInput(
   {
-    type = "text",
     className = "",
     isFocused = false,
     ...props
-  }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean },
+  }: InputHTMLAttributes<HTMLTextAreaElement> & { isFocused?: boolean },
   ref
 ) {
-  const localRef = useRef<HTMLInputElement>(null);
+  const localRef = useRef<HTMLTextAreaElement>(null);
 
   useImperativeHandle(ref, () => ({
     focus: () => localRef.current?.focus(),
@@ -28,14 +27,14 @@ export default forwardRef(function TextInput(
   }, [isFocused]);
 
   return (
-    <input
+    <textarea
       {...props}
-      type={type}
+      rows={5}
       className={
         "rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-indigo-600 dark:focus:ring-indigo-600 " +
         className
       }
       ref={localRef}
-    />
+    ></textarea>
   );
 });

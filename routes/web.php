@@ -12,12 +12,13 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware(['verified'])->group(function(){
-        Route::get('/dashboard', function(){
+    Route::middleware(['verified'])->group(function () {
+        Route::get('/dashboard', function () {
             return Inertia::render('Dashboard');
         })->name('dashboard');
-        Route::get('/features', [FeatureController::class, 'index'])->name('feature.index');
+
+        Route::resource('/feature', FeatureController::class);
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

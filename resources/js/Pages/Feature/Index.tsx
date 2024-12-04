@@ -1,15 +1,13 @@
 import FeatureItem from "@/Components/FeatureItem";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { TFeature, TPaginated } from "@/types";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 
 type Props = {
   features: TPaginated<TFeature>;
 };
 
 export default function Index({ features }: Props) {
-  console.log(features.data[0]);
-
   return (
     <AuthenticatedLayout
       header={
@@ -19,6 +17,15 @@ export default function Index({ features }: Props) {
       }
     >
       <Head title="Features" />
+
+      <div className="pb-8">
+        <Link
+          className="px-4 py-2 bg-slate-500 text-slate-200 rounded"
+          href={route("feature.create")}
+        >
+          Create New Feature
+        </Link>
+      </div>
 
       {features.data.map((feature) => (
         <FeatureItem feature={feature} key={feature.id} />
