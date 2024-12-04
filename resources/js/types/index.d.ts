@@ -52,6 +52,8 @@ export type PageProps<
   auth: {
     user: TAuthUser;
   };
-  success: boolean;
+  flashSuccess: {
+    message?: string;
+  };
   ziggy: Config & { location: string };
 };
