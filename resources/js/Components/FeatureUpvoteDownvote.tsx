@@ -39,7 +39,7 @@ export default function FeatureUpvoteDownvote({
     <div className="flex flex-col items-center">
       <button
         onClick={() => upvoteDownvote(true)}
-        // className={feature.user_has_upvoted ? "text-amber-600" : ""}
+        className={feature.userHasUpVoted ? "text-amber-600" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,10 +54,10 @@ export default function FeatureUpvoteDownvote({
           />
         </svg>
       </button>
-      <span className={"text-2xl font-semibold"}></span>
+      <span className={"text-2xl font-semibold"}>{feature.upvoteCount}</span>
       <button
         onClick={() => upvoteDownvote(false)}
-        // className={feature.user_has_downvoted ? "text-amber-600" : ""}
+        className={feature.userHasDownVoted ? "text-amber-600" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

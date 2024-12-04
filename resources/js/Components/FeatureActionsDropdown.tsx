@@ -38,11 +38,11 @@ export default function FeatureActionsDropdown({
       </Dropdown.Trigger>
 
       <Dropdown.Content>
-        <Dropdown.Link href={route("feature.index")}>
+        <Dropdown.Link href={route("feature.edit", feature)}>
           Edit Feature
         </Dropdown.Link>
         <Dropdown.Link
-          href={route("feature.index")}
+          href={route("feature.destroy", feature)}
           method="delete"
           as="button"
         >

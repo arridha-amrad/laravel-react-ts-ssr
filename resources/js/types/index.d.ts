@@ -18,6 +18,9 @@ export type TFeature = {
   description: string;
   createdAt: string;
   user: TUser;
+  upvoteCount: number;
+  userHasUpVoted: 0 | 1;
+  userHasDownVoted: 0 | 1;
 };
 
 export type TPaginatedLink = {
