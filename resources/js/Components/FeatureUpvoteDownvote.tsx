@@ -2,44 +2,39 @@ import { TFeature } from "@/types";
 import { useForm } from "@inertiajs/react";
 
 export default function FeatureUpvoteDownvote({
-  feature,
+  feature: { upvoteCount, userHasDownVoted, userHasUpVoted, id },
 }: {
   feature: TFeature;
 }) {
-  const upvoteForm = useForm({
-    upvote: true,
+  const isAlreadyVoted = userHasDownVoted || userHasUpVoted;
+
+  const upVoteForm = useForm({
+    vote: true,
   });
 
-  const downvoteForm = useForm({
-    upvote: false,
+  const downVoteForm = useForm({
+    vote: false,
   });
 
-  const upvoteDownvote = (upvote: boolean) => {
-    // if (
-    //   (feature.user_has_upvoted && upvote) ||
-    //   (feature.user_has_downvoted && !upvote)
-    // ) {
-    //   upvoteForm.delete(route("upvote.destroy", feature.id), {
-    //     preserveScroll: true,
-    //   });
-    // } else {
-    //   let form = null;
-    //   if (upvote) {
-    //     form = upvoteForm;
-    //   } else {
-    //     form = downvoteForm;
-    //   }
-    //   form.post(route("upvote.store", feature.id), {
-    //     preserveScroll: true,
-    //   });
-    // }
+  const vote = (value: boolean) => {
+    if ((userHasDownVoted && !value) || (userHasUpVoted && value)) {
+      upVoteForm.delete(route("upvote.destroy", id), { preserveScroll: true });
+    } else {
+      let form: null | typeof upVoteForm = null;
+      if (value) {
+        form = upVoteForm;
+      } else {
+        form = downVoteForm;
+      }
+      form.post(route("upvote.store", id), { preserveScroll: true });
+    }
   };
 
   return (
     <div className="flex flex-col items-center">
       <button
-        onClick={() => upvoteDownvote(true)}
-        className={feature.userHasUpVoted ? "text-amber-600" : ""}
+        onClick={() => vote(true)}
+        className={userHasUpVoted ? "text-amber-600" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -54,10 +49,16 @@ export default function FeatureUpvoteDownvote({
           />
         </svg>
       </button>
-      <span className={"text-2xl font-semibold"}>{feature.upvoteCount}</span>
+      <span
+        className={`text-2xl font-semibold ${
+          isAlreadyVoted && "text-amber-500"
+        }`}
+      >
+        {upvoteCount}
+      </span>
       <button
-        onClick={() => upvoteDownvote(false)}
-        className={feature.userHasDownVoted ? "text-amber-600" : ""}
+        onClick={() => vote(false)}
+        className={userHasDownVoted ? "text-amber-600" : ""}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

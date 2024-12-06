@@ -19,8 +19,9 @@ export type TFeature = {
   createdAt: string;
   user: TUser;
   upvoteCount: number;
-  userHasUpVoted: 0 | 1;
-  userHasDownVoted: 0 | 1;
+  userHasUpVoted: boolean;
+  userHasDownVoted: boolean;
+  totalVoters: number;
 };
 
 export type TPaginatedLink = {
