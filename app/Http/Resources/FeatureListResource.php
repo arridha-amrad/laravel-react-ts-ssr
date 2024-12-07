@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FeatureResource extends JsonResource
+class FeatureListResource extends JsonResource
 {
     public static $wrap = false;
     /**
@@ -25,14 +25,6 @@ class FeatureResource extends JsonResource
             'userHasUpVoted' => $this->user_has_upvoted,
             'userHasDownVoted' => $this->user_has_downvoted,
             'totalVoters' => $this->total_voters,
-            'comments' => $this->comments->map(function($comment){
-                return [
-                    'id' => $comment->id,
-                    'comment' => $comment->comment,
-                    'createdAt' => $comment->created_at,
-                    'user' => new UserResource($comment->user)
-                ];
-            })
         ];
     }
 }

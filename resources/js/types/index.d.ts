@@ -12,6 +12,13 @@ export type TAuthUser = TUser & {
   permissions: string[];
 };
 
+export type TComment = {
+  id: number;
+  comment: string;
+  createdAt: Date;
+  user: TUser;
+};
+
 export type TFeature = {
   id: string;
   name: string;
@@ -22,6 +29,7 @@ export type TFeature = {
   userHasUpVoted: boolean;
   userHasDownVoted: boolean;
   totalVoters: number;
+  comments: TComment[];
 };
 
 export type TPaginatedLink = {

@@ -1,4 +1,6 @@
+import CommentItem from "@/Components/CommentItem";
 import FeatureItem from "@/Components/FeatureItem";
+import NewCommentForm from "@/Components/NewCommentForm";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { TFeature } from "@/types";
 import { Head } from "@inertiajs/react";
@@ -8,6 +10,8 @@ type Props = {
 };
 
 const Show = ({ feature }: Props) => {
+  console.log(feature);
+
   return (
     <AuthenticatedLayout
       header={
@@ -18,6 +22,12 @@ const Show = ({ feature }: Props) => {
     >
       <Head title={"Feature " + feature.name} />
       <FeatureItem feature={feature} />
+      <NewCommentForm feature={feature} />
+      <div className="flex flex-col gap-4 py-6">
+        {feature.comments.map((v) => (
+          <CommentItem comment={v} key={v.id} />
+        ))}
+      </div>
     </AuthenticatedLayout>
   );
 };
