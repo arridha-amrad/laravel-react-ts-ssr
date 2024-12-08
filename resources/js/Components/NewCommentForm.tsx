@@ -3,6 +3,7 @@ import TextAreaInput from "@/Components/TextareaInput";
 import { useForm, usePage } from "@inertiajs/react";
 import { FormEventHandler } from "react";
 import PrimaryButton from "@/Components/PrimaryButton";
+import { can } from "@/helpers";
 
 export default function NewCommentForm({ feature }: { feature: TFeature }) {
   const user = usePage().props.auth.user;
@@ -21,13 +22,9 @@ export default function NewCommentForm({ feature }: { feature: TFeature }) {
     });
   };
 
-  // if (!can(user, "manage_comments")) {
-  //   return (
-  //     <div className="text-center text-gray-600">
-  //       You don't have permission to leave comments
-  //     </div>
-  //   );
-  // }
+  if (!can(user, "manage_comments")) {
+    return null;
+  }
 
   return (
     <form

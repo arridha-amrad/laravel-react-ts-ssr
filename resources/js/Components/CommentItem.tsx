@@ -1,9 +1,10 @@
+import { can } from "@/helpers";
 import { TComment } from "@/types";
 import { useForm, usePage } from "@inertiajs/react";
 import { formatDistanceToNowStrict } from "date-fns";
 
 export default function CommentItem({ comment }: { comment: TComment }) {
-  const user = usePage().props.auth.user;
+  const { user } = usePage().props.auth;
   const form = useForm();
 
   const deleteComment = () => {
@@ -12,6 +13,9 @@ export default function CommentItem({ comment }: { comment: TComment }) {
       preserveState: true,
     });
   };
+
+  const isAuthorizedToDelete =
+    can(user, "manage_comments") && comment.user.id === user.id;
 
   return (
     <div className="flex gap-4 mb-3 p-2">
@@ -40,7 +44,7 @@ export default function CommentItem({ comment }: { comment: TComment }) {
         </h3>
         <div className="italic text-gray-200">{comment.comment}</div>
       </div>
-      {comment.user.id == user.id && (
+      {isAuthorizedToDelete && (
         <div className="flex items-center py-2 px-6">
           <button onClick={deleteComment} className="text-red-500">
             <svg

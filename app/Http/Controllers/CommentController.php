@@ -26,7 +26,7 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        
+
         $comment->delete();
 
         return to_route('feature.show', $comment->feature_id);

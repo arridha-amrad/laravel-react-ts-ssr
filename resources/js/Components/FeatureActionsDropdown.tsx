@@ -1,4 +1,5 @@
 import Dropdown from "@/Components/Dropdown";
+import { can } from "@/helpers";
 import { TFeature } from "@/types";
 import { usePage } from "@inertiajs/react";
 
@@ -9,9 +10,9 @@ export default function FeatureActionsDropdown({
 }) {
   const user = usePage().props.auth.user;
 
-  // if (!can(user, "manage_features")) {
-  //   return;
-  // }
+  if (!can(user, "manage_features")) {
+    return null;
+  }
 
   return (
     <Dropdown>

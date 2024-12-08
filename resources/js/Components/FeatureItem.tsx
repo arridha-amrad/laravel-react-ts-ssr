@@ -5,8 +5,6 @@ import FeatureActionsDropdown from "@/Components/FeatureActionsDropdown";
 import FeatureUpvoteDownvote from "@/Components/FeatureUpvoteDownvote";
 
 export default function FeatureItem({ feature }: { feature: TFeature }) {
-  console.log(feature);
-
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleReadMore = () => {

@@ -3,14 +3,15 @@ import FeatureItem from "@/Components/FeatureItem";
 import NewCommentForm from "@/Components/NewCommentForm";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { TFeature } from "@/types";
-import { Head } from "@inertiajs/react";
+import { Head, usePage } from "@inertiajs/react";
 
 type Props = {
   feature: TFeature;
 };
 
 const Show = ({ feature }: Props) => {
-  console.log(feature);
+  const user = usePage().props.auth;
+  console.log(user);
 
   return (
     <AuthenticatedLayout
