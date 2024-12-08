@@ -14,8 +14,8 @@ enum RolesEnum: string
     {
         return [
             self::Admin->value => 'Admin',
-            self::User->value => 'user',
-            self::Commenter->value => 'commenter',
+            self::User->value => 'User',
+            self::Commenter->value => 'Commenter',
         ];
     }
 

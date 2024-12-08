@@ -7,6 +7,7 @@ export type TUser = {
 };
 
 export type TAuthUser = TUser & {
+  createdAt: Date;
   emailVerifiedAt: Date;
   roles: string[];
   permissions: string[];

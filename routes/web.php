@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UpvoteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -43,6 +44,12 @@ Route::middleware('auth')->group(function () {
             ->middleware('can:' . PermissionsEnum::ManageComments->value);
         Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comment.destroy')
             ->middleware('can:' . PermissionsEnum::ManageComments->value);
+
+        Route::middleware(['permission:' . PermissionsEnum::ManageUsers->value])->group(function () {
+            Route::get('/user', [UserController::class, 'index'])->name('user.index');
+            Route::get('/user/{user}', [UserController::class, 'edit'])->name('user.edit');
+            Route::put('/user/{user}', [UserController::class, 'update'])->name('user.update');
+        });
     });
 });
 
